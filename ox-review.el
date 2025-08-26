@@ -29,6 +29,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'subr-x)
 (require 'ox)
 (require 'ox-publish)
 
@@ -211,18 +212,17 @@ The function result will be used in the section format string."
 
 
 ;;; Utility
-(defun ox-review--empty (_empty _contents _info)
-  "Transcode a element from Org to empty string.
-EMPTY is object.  CONTENTS is object.
-INFO is a plit holding contextual information."
+(defun ox-review--empty (_element _contents _info)
+  "Transcode ELEMENT from Org to an empty string.
+ELEMENT and CONTENTS are ignored.
+INFO is a plist holding contextual information."
   "")
 
 (defun ox-review--get-attributes (blob)
-  "Return attributes list BLOB."
+  "Return attributes list from BLOB."
   (let ((attr (org-export-read-attribute :attr_review blob)))
     (if attr
-        (progn
-          attr)
+        attr
       (let ((parent (org-export-get-parent blob)))
         (when parent
           (org-export-read-attribute :attr_review parent))))))
@@ -880,7 +880,7 @@ CONTENTS is nil.  INFO is a plist holding contextual information."
   (let ((ref (ox-review--reference target info)))
     (format "@<href>{%s}" ref)))
 
-;;;; Templete
+;;;; Template
 (defun ox-review-template (contents _info)
   "Return complete document string after Re:VIEW conversion.
 CONTENTS is the transcoded contents string.
