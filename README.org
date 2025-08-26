@@ -63,7 +63,7 @@ The following blocks are represented as special blocks.
 - tip
 - info
 - warning
-- imoprtant
+- important
 - caution
 - notice
 - lead
